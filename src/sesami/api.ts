@@ -31,8 +31,8 @@ const sesamiRequest = async (
     secretKey: string,
     history: string
 ) => {
-    const encodedHistory = new TextEncoder().encode(history);
-    const base64History = Buffer.from(encodedHistory).toString("base64");
+    const historyUint8 = new TextEncoder().encode(history);
+    const base64History = Buffer.from(historyUint8).toString("base64");
     const sign = await generateCmacSign(secretKey);
     const request = {
         cmd: action,
@@ -43,7 +43,6 @@ const sesamiRequest = async (
         method: "POST",
         headers: {
             "x-api-key": apiKey,
-            "Content-Type": "application/json",
         },
         body: JSON.stringify(request),
     });
