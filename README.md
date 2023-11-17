@@ -52,7 +52,7 @@ Cloudflareのページが開きますので、そこで認証を行ってくだ�
 wrangler.tomlファイルが無かった場合は、新たに作成してください。
 wrangler.tomlに、以下の項目を指定してください。
 
-```
+```toml
 name = "cf-sesami-open"
 compatibility_date = "2023-01-01"
 compatibility_flags = [ "nodejs_compat" ]
@@ -115,7 +115,7 @@ http://127.0.0.1:8787/api/sesami/lock
 
 施錠リクエストパラメータ
 
-```
+```json
 {
   "password":"設定したパスワード文字列",
   "history":"任意の名前(cf-locked等)"
@@ -130,7 +130,7 @@ http://127.0.0.1:8787/api/sesami/unlock
 
 解錠リクエストパラメータ
 
-```
+```json
 {
   "password":"設定したパスワード文字列",
   "history":"任意の名前(cf-unlocked)"
@@ -164,7 +164,7 @@ https://cf-sesami-open.XXXXXXX.workers.dev/api/sesami/lock
 
 施錠リクエストパラメータ
 
-```
+```json
 {
   "password":"設定したパスワード文字列",
   "history":"任意の名前(cf-locked等)"
@@ -179,7 +179,7 @@ https://cf-sesami-open.XXXXXXX.workers.dev/api/sesami/unlock
 
 解錠リクエストパラメータ
 
-```
+```json
 {
   "password":"設定したパスワード文字列",
   "history":"任意の名前(cf-unlocked)"
