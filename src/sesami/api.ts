@@ -2,6 +2,13 @@ import { Hono } from "hono";
 import { Buffer } from "node:buffer";
 import { isAuthed, generateCmacSign } from "../utils";
 
+type Env = {
+    API_KEY: string;
+    PASSWORD_DIGEST: string;
+    UUID: string;
+    SECRET_KEY: string;
+};
+
 interface SesamiStatus {
     batteryPercentage: number;
     batteryVoltage: number;
@@ -24,7 +31,8 @@ const sesamiRequest = async (
     secretKey: string,
     history: string
 ) => {
-    const base64History = Buffer.from(history).toString("base64");
+    const encodedHistory = new TextEncoder().encode(history);
+    const base64History = Buffer.from(encodedHistory).toString("base64");
     const sign = await generateCmacSign(secretKey);
     const request = {
         cmd: action,
@@ -35,6 +43,7 @@ const sesamiRequest = async (
         method: "POST",
         headers: {
             "x-api-key": apiKey,
+            "Content-Type": "application/json",
         },
         body: JSON.stringify(request),
     });
@@ -51,7 +60,7 @@ const isSesamiLocked = async (apiKey: string, uuid: string) => {
     return json.CHSesame2Status === "locked";
 };
 
-const sesami = new Hono();
+const sesami = new Hono<{ Bindings: Env }>();
 
 sesami.post("/lock", async (c) => {
     if (c.req) {
@@ -60,14 +69,14 @@ sesami.post("/lock", async (c) => {
         if (authed) {
             const locked = await isSesamiLocked(c.env.API_KEY, c.env.UUID);
             if (!locked) {
-                await sesamiRequest(
+                const result = await sesamiRequest(
                     c.env.API_KEY,
                     82, //lock action
                     c.env.UUID,
                     c.env.SECRET_KEY,
                     param.history
                 );
-                return c.text("success locked.");
+                return c.json(result);
             }
         }
     }
@@ -81,14 +90,14 @@ sesami.post("/unlock", async (c) => {
         if (authed) {
             const locked = await isSesamiLocked(c.env.API_KEY, c.env.UUID);
             if (locked) {
-                await sesamiRequest(
+                const result = await sesamiRequest(
                     c.env.API_KEY,
                     83, //unlock action
                     c.env.UUID,
                     c.env.SECRET_KEY,
                     param.history
                 );
-                return c.text("success unlocked.");
+                return c.json(result);
             }
         }
     }
