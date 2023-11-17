@@ -16,14 +16,14 @@ cloudflare workersに、sesamiの開け締めをコントロールするAPIを�
 ### Cloudflareのアカウントを取得する
 
 [Cludflare](https://www.cloudflare.com/ja-jp/)のアカウントを取得してください。
-アカウントを取得済みんの方は、この項目はスキップしても問題ありません。
+アカウントを取得済みの方は、この項目はスキップしても問題ありません。
 
 ### ソースコードのクローン
 
 下記コマンドを実行して、ソースコードを取得してください。
 
 ```
-git clone 
+git clone git@github.com:ArcCosine/cf-sesami-open.git
 ```
 
 ### インストール
@@ -49,9 +49,12 @@ Cloudflareのページが開きますので、そこで認証を行ってくだ�
 ### 環境変数の設定
 
 *wrangler.toml*ファイルを修正してください。
-その中に、以下の項目を指定してください。
+wrangler.tomlファイルが無かった場合は、新たに作成してください。
+wrangler.tomlに、以下の項目を指定してください。
 
 ```
+name = "cf-sesami-open"
+compatibility_date = "2023-01-01"
 compatibility_flags = [ "nodejs_compat" ]
 
 [vars]
@@ -61,8 +64,11 @@ SECRET_KEY = ""
 PASSWORD_DIGEST = ""
 ```
 
+- nameに関しては、任意です
+- compatibility_dateは、開発段階では"2023-01-01"です。
+- compatibility_flagsを設定していないと、Bufferなどが使えないので必ず設定してください。
 - API_KEYは、[SESAMIの公式サイト](https://partners.candyhouse.co/)から取得してください。
-- SESAMIデバイスのUUIDとSECRET_KEYは、同じサイトにデバイスのQRコードをアップロードする事で簡単に取得する事が出来ます。
+- SESAMIデバイスのUUIDとSESAMIデバイスのSECRET_KEYは、同じサイトにデバイスのQRコードをアップロードする事で簡単に取得する事が出来ます。
 - PASSWORD_DIGESTは、[SHA512](https://emn178.github.io/online-tools/sha512.html)などのサイトで生成して取得してください。オンラインツールを使うのが不安な方は後述する内部ツールで取得できます。
 
 
@@ -75,12 +81,24 @@ PASSWORD_DIGEST = ""
 npm run dev
 ```
 
+[http://127.0.0.1:8787/](http://127.0.0.1:8787/)へアクセスすると、
+
+```
+cf-sesami-open
+```
+
+と表示されていたら、成功です。
+
+#### localhostにアクセス出来なかった場合、
+
+もし、WSL上で開発していて、http://localhost:8787/やhttp://127.0.0.1:8787/でアクセス出来なかった場合は、http://172.XX.XX.XX:8787/と表示されているURLにアクセスしてみてください。
+
 ### 開発サーバでPASSWORD_DIGESTを取得する
 
 開発サーバを立ち上げた状態で、（※パスワードは任意の文字列）
 
 ```
-http://localhost:8787/generate/パスワード
+http://127.0.0.1:8787/generate/パスワード
 ```
 
 とアクセスすると、PASSWORD_DIGESTを取得する事が出来ます。
