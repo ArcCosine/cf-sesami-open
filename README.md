@@ -62,11 +62,11 @@ SECRET_KEY = ""
 PASSWORD_DIGEST = ""
 ```
 
--   name に関しては、任意です
+-   name に関しては、任意です（設定した名前が、URLに反映されます）。
 -   compatibility_date は、開発段階では"2023-01-01"です。
--   compatibility_flags を設定していないと、Buffer などが使えないので必ず設定してください。
--   API_KEY は、[SESAMI の公式サイト](https://partners.candyhouse.co/)から取得してください。
--   SESAMI デバイスの UUID と SESAMI デバイスの SECRET_KEY は、同じサイトにデバイスの QR コードをアップロードする事で簡単に取得する事が出来ます。
+-   compatibility_flags を設定していないと、Buffer が使えないので必ず設定してください。
+-   API_KEY は、[SESAME の公式サイト](https://partners.candyhouse.co/)から取得してください。
+-   SESAME デバイスの UUID と SESAME デバイスの SECRET_KEY は、同じサイトにデバイスの QR コードをアップロードする事で簡単に取得する事が出来ます。
 -   PASSWORD_DIGEST は、[SHA512](https://emn178.github.io/online-tools/sha512.html)などのサイトで生成して取得してください。オンラインツールを使うのが不安な方は後述する内部ツールで取得できます。
 
 ### 開発サーバを立ち上げる
@@ -176,3 +176,8 @@ https://cf-sesame-open.XXXXXXX.workers.dev/api/sesame/unlock
     "password": "設定したパスワード文字列"
 }
 ```
+
+### 現状の問題点
+
+history部分のエンコードがバグっており、誰が施錠/解錠したのか上手く表示されない。
+[Cloudflare Workers側の話](https://twitter.com/yusukebe/status/1725807676591091715)のようなので、対応される事を待つ必要がある。

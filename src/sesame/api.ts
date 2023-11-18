@@ -49,7 +49,7 @@ const sesameRequest = async (
         method: "POST",
         headers: {
             "x-api-key": apiKey,
-            "Content-Type": "application/json",
+            "Content-Type": "application/json;charset=UTF-8",
         },
         body: JSON.stringify(request),
     });
@@ -64,13 +64,15 @@ sesame.post("/lock", async (c) => {
             (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) &&
             !(await isSesamiLocked(c.env.API_KEY, c.env.UUID))
         ) {
-            await sesameRequest(
+            const result = await sesameRequest(
                 82, //lock action
                 c.env.API_KEY,
                 c.env.UUID,
                 c.env.SECRET_KEY
             );
-            return c.text("success locked.");
+            const newResponse = new Response(result.body, result)
+            return newResponse;
+
         }
     }
     return c.text("already locked.");
@@ -83,13 +85,15 @@ sesame.post("/unlock", async (c) => {
             (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) &&
             (await isSesamiLocked(c.env.API_KEY, c.env.UUID))
         ) {
-            await sesameRequest(
+            const result = await sesameRequest(
                 83, //unlock action
                 c.env.API_KEY,
                 c.env.UUID,
                 c.env.SECRET_KEY
             );
-            return c.text("success unlocked.");
+            const newResponse = new Response(result.body, result)
+            return newResponse;
+
         }
     }
     return c.text("already unlocked.");
@@ -99,13 +103,14 @@ sesame.post("/toggle", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
         if (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) {
-            await sesameRequest(
+            const result = await sesameRequest(
                 88, //toggle action
                 c.env.API_KEY,
                 c.env.UUID,
                 c.env.SECRET_KEY
             );
-            return c.text("success toggled.");
+            const newResponse = new Response(result.body, result)
+            return newResponse;
         }
     }
     return c.text("already toggled.");
