@@ -99,6 +99,8 @@ sesame.post("/unlock", async (c) => {
     return c.text("already unlocked.");
 });
 
+/*
+ *
 sesame.post("/toggle", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
@@ -115,5 +117,6 @@ sesame.post("/toggle", async (c) => {
     }
     return c.text("already toggled.");
 });
+//*/
 
 export { sesame };
