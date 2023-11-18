@@ -18,12 +18,11 @@ export const isAuthed = async (
     inputPassword: string,
     passwordDigest: string
 ) => {
-    const inputPasswordDigest = await generateSHA512(inputPassword);
-    return passwordDigest === inputPasswordDigest;
+    return (await generateSHA512(inputPassword)) === passwordDigest;
 };
 
 // Ref:https://doc.candyhouse.co/ja/SesameAPI#aes-cmac-%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95
-export const generateCmacSign = async (secretKey: string) => {
+export const createCmacSign = async (secretKey: string) => {
     // * key:key-secret_hex to data
     const key = Buffer.from(secretKey, "hex");
 
