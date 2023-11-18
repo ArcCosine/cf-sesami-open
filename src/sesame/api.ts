@@ -33,7 +33,7 @@ const isSesamiLocked = async (apiKey: string, uuid: string) => {
     return json.CHSesame2Status === "locked";
 };
 
-const sesamiRequest = async (
+const sesameRequest = async (
     cmd: number,
     apiKey: string,
     uuid: string,
@@ -42,7 +42,7 @@ const sesamiRequest = async (
     const sign = await createCmacSign(secretKey);
     const request = {
         cmd: cmd,
-        history: btoa("cf_sesami_open"),
+        history: btoa("cf_sesame_open"),
         sign: sign,
     };
     return await fetch(`${API_ENTRY}${uuid}/cmd`, {
@@ -56,15 +56,15 @@ const sesamiRequest = async (
 };
 
 // Entry Point
-const sesami = new Hono<{ Bindings: Env }>();
-sesami.post("/lock", async (c) => {
+const sesame = new Hono<{ Bindings: Env }>();
+sesame.post("/lock", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
         if (
             (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) &&
             !(await isSesamiLocked(c.env.API_KEY, c.env.UUID))
         ) {
-            await sesamiRequest(
+            await sesameRequest(
                 82, //lock action
                 c.env.API_KEY,
                 c.env.UUID,
@@ -76,14 +76,14 @@ sesami.post("/lock", async (c) => {
     return c.text("already locked.");
 });
 
-sesami.post("/unlock", async (c) => {
+sesame.post("/unlock", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
         if (
             (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) &&
             (await isSesamiLocked(c.env.API_KEY, c.env.UUID))
         ) {
-            await sesamiRequest(
+            await sesameRequest(
                 83, //unlock action
                 c.env.API_KEY,
                 c.env.UUID,
@@ -95,11 +95,11 @@ sesami.post("/unlock", async (c) => {
     return c.text("already unlocked.");
 });
 
-sesami.post("/toggle", async (c) => {
+sesame.post("/toggle", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
         if (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) {
-            await sesamiRequest(
+            await sesameRequest(
                 88, //toggle action
                 c.env.API_KEY,
                 c.env.UUID,
@@ -111,4 +111,4 @@ sesami.post("/toggle", async (c) => {
     return c.text("already toggled.");
 });
 
-export { sesami };
+export { sesame };

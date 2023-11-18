@@ -1,10 +1,10 @@
 import { Hono } from "hono";
 import { generateSHA512 } from "./utils";
-import { sesami } from "./sesami/api";
+import { sesame } from "./sesame/api";
 
 const app = new Hono();
 
-app.get("/", (c) => c.text("cf-sesami-open"));
+app.get("/", (c) => c.text("cf-sesame-open"));
 
 app.get("/generate/:pass", async (c) => {
     if (c.req) {
@@ -15,6 +15,6 @@ app.get("/generate/:pass", async (c) => {
     return c.text("Parameter not found");
 });
 
-app.route("/api/sesami", sesami);
+app.route("/api/sesame", sesame);
 
 export default app;

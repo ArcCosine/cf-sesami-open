@@ -1,6 +1,6 @@
-# cf-sesami-open
+# cf-sesame-open
 
-cloudflare workers に、sesami の開け締めをコントロールする API を生成します。
+cloudflare workers に、sesame の開け締めをコントロールする API を生成します。
 
 ## 開発の仕方
 
@@ -23,7 +23,7 @@ cloudflare workers に、sesami の開け締めをコントロールする API �
 下記コマンドを実行して、ソースコードを取得してください。
 
 ```
-git clone git@github.com:ArcCosine/cf-sesami-open.git
+git clone git@github.com:ArcCosine/cf-sesame-open.git
 ```
 
 ### インストール
@@ -51,7 +51,7 @@ wrangler.toml ファイルが無かった場合は、新たに作成してくだ
 wrangler.toml に、以下の項目を指定してください。
 
 ```toml
-name = "cf-sesami-open"
+name = "cf-sesame-open"
 compatibility_date = "2023-01-01"
 compatibility_flags = [ "nodejs_compat" ]
 
@@ -80,7 +80,7 @@ npm run dev
 [http://127.0.0.1:8787/](http://127.0.0.1:8787/)へアクセスすると、
 
 ```
-cf-sesami-open
+cf-sesame-open
 ```
 
 と表示されていたら、成功です。
@@ -106,7 +106,7 @@ http://127.0.0.1:8787/generate/パスワード
 施錠リクエスト先
 
 ```
-http://127.0.0.1:8787/api/sesami/lock
+http://127.0.0.1:8787/api/sesame/lock
 ```
 
 施錠リクエストパラメータ
@@ -120,7 +120,7 @@ http://127.0.0.1:8787/api/sesami/lock
 解錠リクエスト先
 
 ```
-http://127.0.0.1:8787/api/sesami/unlock
+http://127.0.0.1:8787/api/sesame/unlock
 ```
 
 解錠リクエストパラメータ
@@ -140,7 +140,7 @@ npm run deploy
 全ての設定が完了したら、deploy してください。
 
 ```
-https://cf-sesami-open.XXXXXXX.workers.dev
+https://cf-sesame-open.XXXXXXX.workers.dev
 ```
 
 のような URL が出力されるので、控えてください。
@@ -152,7 +152,7 @@ deploy した URL をベースにリクエストを飛ばしてください。
 施錠リクエスト先
 
 ```
-https://cf-sesami-open.XXXXXXX.workers.dev/api/sesami/lock
+https://cf-sesame-open.XXXXXXX.workers.dev/api/sesame/lock
 ```
 
 施錠リクエストパラメータ
@@ -166,7 +166,7 @@ https://cf-sesami-open.XXXXXXX.workers.dev/api/sesami/lock
 解錠リクエスト先
 
 ```
-https://cf-sesami-open.XXXXXXX.workers.dev/api/sesami/unlock
+https://cf-sesame-open.XXXXXXX.workers.dev/api/sesame/unlock
 ```
 
 解錠リクエストパラメータ
