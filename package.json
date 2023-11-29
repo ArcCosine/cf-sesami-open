@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "aes-cmac": "^2.0.0",
-    "hono": "^3.10.1"
+    "hono": "latest"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20230914.0",
