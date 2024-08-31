@@ -134,7 +134,7 @@ http://127.0.0.1:8787/api/sesame/unlock
 ### deploy
 
 ```
-npm run deploy
+bun run deploy
 ```
 
 全ての設定が完了したら、deploy してください。
