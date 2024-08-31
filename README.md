@@ -65,7 +65,7 @@ PASSWORD_DIGEST = ""
 -   name に関しては、任意です（設定した名前が、URLに反映されます）。
 -   compatibility_date は、開発段階では"2023-01-01"です。
 -   compatibility_flags を設定していないと、Buffer が使えないので必ず設定してください。
--   API_KEY は、[SESAME の公式サイト](https://partners.candyhouse.co/)から取得してください。
+-   API_KEY は、[SESAME の公式サイト](https://biz.candyhouse.co/)から取得してください。
 -   SESAME デバイスの UUID と SESAME デバイスの SECRET_KEY は、同じサイトにデバイスの QR コードをアップロードする事で簡単に取得する事が出来ます。
 -   PASSWORD_DIGEST は、[SHA512](https://emn178.github.io/online-tools/sha512.html)などのサイトで生成して取得してください。オンラインツールを使うのが不安な方は後述する内部ツールで取得できます。
 
@@ -74,7 +74,7 @@ PASSWORD_DIGEST = ""
 下記コマンドを実行すると、開発サーバが立ち上がります。
 
 ```
-npm run dev
+bun run dev
 ```
 
 [http://127.0.0.1:8787/](http://127.0.0.1:8787/)へアクセスすると、

@@ -57,6 +57,8 @@ const sesameRequest = async (
 
 // Entry Point
 const sesame = new Hono<{ Bindings: Env }>();
+
+// Lock
 sesame.post("/lock", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
@@ -78,6 +80,7 @@ sesame.post("/lock", async (c) => {
     return c.text("already locked.");
 });
 
+// Unlock
 sesame.post("/unlock", async (c) => {
     if (c.req) {
         const param = await c.req.json<CfRequest>();
@@ -98,25 +101,5 @@ sesame.post("/unlock", async (c) => {
     }
     return c.text("already unlocked.");
 });
-
-/*
- *
-sesame.post("/toggle", async (c) => {
-    if (c.req) {
-        const param = await c.req.json<CfRequest>();
-        if (await isAuthed(param.password, c.env.PASSWORD_DIGEST)) {
-            const result = await sesameRequest(
-                88, //toggle action
-                c.env.API_KEY,
-                c.env.UUID,
-                c.env.SECRET_KEY
-            );
-            const newResponse = new Response(result.body, result)
-            return newResponse;
-        }
-    }
-    return c.text("already toggled.");
-});
-//*/
 
 export { sesame };
