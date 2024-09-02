@@ -179,5 +179,4 @@ https://cf-sesame-open.XXXXXXX.workers.dev/api/sesame/unlock
 
 ### 現状の問題点
 
-history部分のエンコードがバグっており、誰が施錠/解錠したのか上手く表示されない。
-[Cloudflare Workers側の話](https://twitter.com/yusukebe/status/1725807676591091715)のようなので、対応される事を待つ必要がある。
+なし
